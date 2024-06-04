@@ -1,0 +1,135 @@
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+ 
+public class HospitalManagementSystem extends Application {
+ 
+    private ObservableList<PatientRecord> patientRecords = FXCollections.observableArrayList();
+    private ListView<PatientRecord> recordListView;
+    private TextField searchField;
+    private Button searchButton;
+    private Button sortByNameButton;
+    private Button sortByAgeButton;
+ 
+    public static void main(String[] args) {
+        launch(args);
+    }
+ 
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Hospital Management System");
+ 
+        patients = new ArrayList<>();
+        patientRecords.add(new PatientRecord("Tania", "Doe", 35, "Heart disease"));
+        patientRecords.add(new PatientRecord("Jenny", "Smith", 55, "Cholesterol"));
+        patientRecords.add(new PatientRecord("Tony", "Mora", 69, "High Blood Pressure"));
+        patientRecords.add(new PatientRecord("Thabiso", "Zulu", 30, "Asthma"));
+        patientRecords.add(new PatientRecord("Kamogelo", "Harris", 53, "Diabetes"));
+        patientRecords.add(new PatientRecord("Lizzy", "Robertson", 41, "High Blood Pressure"));
+        patientRecords.add(new PatientRecord("David", "Ward", 72, "Diabetes"));
+ 
+        observablePatients = FXCollections.observableArrayList(patients);
+ 
+        
+        searchField = new TextField();
+        searchField.setPromptText("Search by name...");
+        searchButton = new Button("Search");
+        sortByNameButton = new Button("Sort by Name");
+        sortByAgeButton = new Button("Sort by Age");
+        recordListView = new ListView<>(patientRecords);
+ 
+        
+        searchButton.setOnAction(e -> searchPatient());
+        sortByNameButton.setOnAction(e -> sortBy("Name"));
+        sortByAgeButton.setOnAction(e -> sortBy("Age"));
+ 
+       
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new Insets(10));
+        HBox hbox = new HBox(10);
+        hbox.getChildren().addAll(searchField, searchButton, sortByNameButton, sortByAgeButton);
+        vbox.getChildren().addAll(hbox, new Label("Patient Records:"), recordListView);
+ 
+        
+        Scene scene = new Scene(vbox, 400, 300);
+        primaryStage.setTitle("Hospital Management System");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+ 
+    private void searchPatient() {
+        String searchText = searchField.getText().toLowerCase();
+        ObservableList<PatientRecord> searchResults = FXCollections.observableArrayList();
+ 
+        public ArrayList<Patient> searchPatients(String name) {
+    ArrayList<Patient> results = new ArrayList<>();
+        for (PatientRecord record : patientRecords) {
+            if (record.getName().toLowerCase().contains(searchText)) {
+                searchResults.add(record);
+            }
+        }
+ 
+        recordListView.setItems(searchResults);
+    }
+ 
+       private void searchPatients() {
+        String searchText = searchField.getText().toLowerCase();
+        if (searchText.isEmpty()) {
+            // Handle empty search term
+            showAlert("Please enter a name to search.");
+            return;
+        }
+ 
+    private void sortBy(String criteria) {
+        if (criteria.equals("Name")) {
+            patientRecords.sort((p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
+        } else if (criteria.equals("Age")) {
+            patientRecords.sort((p1, p2) -> Integer.compare(p1.getAge(), p2.getAge()));
+        }
+ 
+        recordListView.setItems(patientRecords);
+    }
+    class Patient {
+    private String name;
+    private String surname;
+    private int age;
+    private String medicalHistory;
+ 
+    public Patient(String name, String surname, int age, String medicalHistory) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.medicalHistory = medicalHistory;
+    }
+ 
+    public String getName() {
+        return name;
+    }
+ 
+    public int getAge() {
+        return age;
+           }
+class NameComparator implements Comparator<Patient> {
+ 
+    @Override
+    public int compare(Patient p1, Patient p2) {
+        return p1.getName().compareTo(p2.getName());
+    }
+}
+ 
+     sortByNameButton.setOnAction(event -> {
+     Collections.sort(patients, new NameComparator());
+     patientList.clear();
+     patientList.addAll(sortedPatients);
+                   }
+             }
+     }
